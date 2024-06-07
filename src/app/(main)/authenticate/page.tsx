@@ -1,7 +1,7 @@
 "use client";
 
 import { useStytch, useStytchUser } from "@stytch/nextjs";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const OAUTH_TOKEN = "oauth";
@@ -16,16 +16,21 @@ const MAGIC_LINKS_TOKEN = "magic_links";
  *
  * On successful authentication, a session will be created and the user will be redirect to /profile.
  */
-const Authenticate = () => {
+const Authenticate = ({
+  params,
+  searchParams,
+}: {
+  params: any;
+  searchParams: any;
+}) => {
   const { user, isInitialized } = useStytchUser();
   const stytch = useStytch();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (stytch && !user && isInitialized) {
-      const token = searchParams.get("token");
-      const stytch_token_type = searchParams.get("stytch_token_type");
+      const token = searchParams.token;
+      const stytch_token_type = searchParams.stytch_token_type;
 
       if (token && stytch_token_type === OAUTH_TOKEN) {
         stytch.oauth.authenticate(token, {
