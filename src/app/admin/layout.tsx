@@ -10,7 +10,8 @@ const stytch = createStytchB2BUIClient(
     cookieOptions: {
       jwtCookieName: Constants.STYTCH_JWT_COOKIE_NAME,
       opaqueTokenCookieName: Constants.STYTCH_TOKEN_COOKIE_NAME,
-      domain: "acme.com",
+      //domain: "acme.com",
+      domain: "vercel.app",
       availableToSubdomains: true,
       path: "/",
     },
