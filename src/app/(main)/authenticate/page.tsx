@@ -32,7 +32,7 @@ const Authenticate = ({
       const token = searchParams.token;
       const stytch_token_type = searchParams.stytch_token_type;
 
-      console.log(`SEARCH_PARAMS:: ${searchParams}`);
+      console.log(`SEARCH_PARAMS:: ${JSON.stringify(searchParams)}`);
 
       if (token && stytch_token_type === OAUTH_TOKEN) {
         stytch.oauth.authenticate(token, {
