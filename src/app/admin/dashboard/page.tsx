@@ -1,14 +1,14 @@
 "use client";
-import { useStytchB2BClient } from "@stytch/nextjs/b2b";
+import { useStytchB2BClient, useStytchMember } from "@stytch/nextjs/b2b";
 import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
-  const stytch = useStytchB2BClient();
   const router = useRouter();
+  const stytch = useStytchB2BClient();
+  const { member: user } = useStytchMember();
 
   const logout = () => {
-    stytch.session.revoke();
-    router.push("/admin");
+    stytch.session.revoke().then((res) => router.push("/admin"));
   };
 
   return (
@@ -18,6 +18,14 @@ const Dashboard = () => {
       <button className="" onClick={logout}>
         Sign Out
       </button>
+
+      <div className="mt-5 mb-2">Your roles:</div>
+
+      <code className="bg-gray-900 p-3">
+        {user?.roles.map((r) => (
+          <div key={r.role_id}>{r.role_id}</div>
+        ))}
+      </code>
     </div>
   );
 };

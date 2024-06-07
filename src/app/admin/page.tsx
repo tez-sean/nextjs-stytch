@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/navigation";
 
 import * as utils from "@/lib/utils";
+import Link from "next/link";
 
 const AdminHome = () => {
   const router = useRouter();
@@ -24,7 +25,7 @@ const AdminHome = () => {
     },
     passwordOptions: {
       loginRedirectURL: redirectUrl,
-      resetPasswordRedirectURL: redirectUrl,
+      resetPasswordRedirectURL: `${utils.getDomainFromWindow()}/admin/auth/reset-password`,
     },
     sessionOptions: {
       sessionDurationMinutes: 60,
@@ -34,6 +35,8 @@ const AdminHome = () => {
   return (
     <div className="h-screen flex flex-col justify-center items-center">
       <div>Admin Home</div>
+
+      <Link href="/admin/profile">Profile</Link>
 
       <StytchB2B
         config={config}
