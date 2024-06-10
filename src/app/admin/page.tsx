@@ -4,6 +4,7 @@ import { StytchB2B } from "@stytch/nextjs/b2b";
 import {
   AuthFlowType,
   B2BProducts,
+  StyleConfig,
   StytchB2BUIConfig,
   StytchEventType,
 } from "@stytch/vanilla-js";
@@ -31,25 +32,50 @@ const AdminHome = () => {
       sessionDurationMinutes: 60,
     },
   };
+  // Apply custom styles to the pre-built UI components
+  const styles: StyleConfig = {
+    inputs: {
+      borderRadius: "0.375rem",
+      borderColor: "#dedede",
+      textColor: "#333333",
+    },
+    buttons: {
+      primary: {
+        backgroundColor: "rgb(63, 89, 228)",
+        borderColor: "rgb(255, 255, 255)",
+        borderRadius: "0.375rem",
+        textColor: "#fff",
+      },
+    },
+    colors: {
+      primary: "rgb(25, 25, 25)",
+    },
+    container: {
+      borderColor: "rgb(255,255,255)",
+    },
+  };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
-      <div>Admin Home</div>
+    <div className="h-screen flex flex-col justify-center items-center bg-gray-100">
+      <div className="rou">Admin Home</div>
 
       <Link href="/admin/profile">Profile</Link>
 
-      <StytchB2B
-        config={config}
-        callbacks={{
-          onEvent: async ({ type, data }) => {
-            if (
-              type === StytchEventType.B2BMagicLinkAuthenticate ||
-              type === StytchEventType.B2BPasswordAuthenticate
-            )
-              router.push("/admin/dashboard");
-          },
-        }}
-      />
+      <div className="shadow-lg">
+        <StytchB2B
+          config={config}
+          styles={styles}
+          callbacks={{
+            onEvent: async ({ type, data }) => {
+              if (
+                type === StytchEventType.B2BMagicLinkAuthenticate ||
+                type === StytchEventType.B2BPasswordAuthenticate
+              )
+                router.push("/admin/dashboard");
+            },
+          }}
+        />
+      </div>
     </div>
   );
 };

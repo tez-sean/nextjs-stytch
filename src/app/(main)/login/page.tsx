@@ -2,7 +2,12 @@
 
 import * as utils from "@/lib/utils";
 import { StytchLogin } from "@stytch/nextjs";
-import { Products, StytchEventType } from "@stytch/vanilla-js";
+import {
+  Products,
+  StyleConfig,
+  StytchEventType,
+  StytchLoginConfig,
+} from "@stytch/vanilla-js";
 import { useRouter } from "next/navigation";
 
 /*
@@ -13,18 +18,6 @@ import { useRouter } from "next/navigation";
  */
 const Login = () => {
   const router = useRouter();
-
-  const styles = {
-    container: {
-      width: "100%",
-    },
-    buttons: {
-      primary: {
-        backgroundColor: "#4A37BE",
-        borderColor: "#4A37BE",
-      },
-    },
-  };
 
   const config = {
     products: [
@@ -54,24 +47,47 @@ const Login = () => {
       resetPasswordRedirectURL: utils.getDomainFromWindow() + "/authenticate",
       resetPasswordExpirationMinutes: 60,
     },
-  } as Parameters<typeof StytchLogin>[0]["config"];
+  } as StytchLoginConfig;
+  const styles: StyleConfig = {
+    inputs: {
+      borderRadius: "0.375rem",
+      borderColor: "#dedede",
+      textColor: "#333333",
+    },
+    buttons: {
+      primary: {
+        backgroundColor: "rgb(63, 89, 228)",
+        borderColor: "rgb(255, 255, 255)",
+        borderRadius: "0.375rem",
+        textColor: "#fff",
+      },
+    },
+    colors: {
+      primary: "rgb(25, 25, 25)",
+    },
+    container: {
+      borderColor: "rgb(255,255,255)",
+    },
+  };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-purple-300 h-screen">
-      <StytchLogin
-        config={config}
-        styles={styles}
-        callbacks={{
-          onEvent: async ({ type, data }) => {
-            console.log(`EVENTING: ${type}`);
-            if (
-              type === StytchEventType.PasswordAuthenticate ||
-              type === StytchEventType.OTPsAuthenticate
-            )
-              router.push("/location");
-          },
-        }}
-      />
+    <div className="flex flex-col justify-center items-center bg-gray-100 h-screen">
+      <div className="shadow-lg">
+        <StytchLogin
+          config={config}
+          styles={styles}
+          callbacks={{
+            onEvent: async ({ type, data }) => {
+              console.log(`EVENTING: ${type}`);
+              if (
+                type === StytchEventType.PasswordAuthenticate ||
+                type === StytchEventType.OTPsAuthenticate
+              )
+                router.push("/location");
+            },
+          }}
+        />
+      </div>
     </div>
   );
 };
