@@ -43,7 +43,7 @@ const AuthenticateComponent = () => {
     }
 
     if (user) {
-      router.replace("/location");
+      router.replace("/admin/dashboard");
     }
   }, [router, user, isInitialized]);
 
