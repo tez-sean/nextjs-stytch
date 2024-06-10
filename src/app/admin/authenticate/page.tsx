@@ -22,18 +22,18 @@ const Authenticate = ({
   const stytch = useStytchB2BClient();
   const { member, isInitialized } = useStytchMember();
 
+  const token = searchParams.token;
+  const tokenType = searchParams.stytch_token_type;
+
   useEffect(() => {
     if (stytch && isInitialized && !member) {
-      const token = searchParams.token;
-      const tokenType = searchParams.stytch_token_type;
-
       if (token && tokenType === "multi_tenant_magic_links")
         stytch.magicLinks.authenticate({
           magic_links_token: token,
           session_duration_minutes: 60,
         });
 
-      console.log(`TOKEN_TYPE:: ${tokenType}`);
+      //console.log(`TOKEN_TYPE:: ${tokenType}`);
     }
   }, [stytch, member, isInitialized, router, searchParams]);
 
