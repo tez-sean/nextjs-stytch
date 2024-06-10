@@ -1,11 +1,10 @@
 "use client";
 
-import { useStytch, useStytchUser } from "@stytch/nextjs";
+import { useStytchB2BClient, useStytchMember } from "@stytch/nextjs/b2b";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-const OAUTH_TOKEN = "oauth";
-const MAGIC_LINKS_TOKEN = "magic_links";
+const MAGIC_LINKS_TOKEN = "multi_tenant_magic_links";
 
 /**
  * During both the Magic link and OAuth flows, Stytch will redirect the user back to your application to a specified redirect URL (see Login.tsx).
@@ -16,10 +15,10 @@ const MAGIC_LINKS_TOKEN = "magic_links";
  *
  * On successful authentication, a session will be created and the user will be redirect to /profile.
  */
-const Authenticate = () => {
-  const { user, isInitialized } = useStytchUser();
+const AuthenticateComponent = () => {
+  const { member: user, isInitialized } = useStytchMember();
   const searchParams = useSearchParams();
-  const stytch = useStytch();
+  const stytch = useStytchB2BClient();
   const router = useRouter();
 
   const token = searchParams.get("token");
@@ -29,12 +28,9 @@ const Authenticate = () => {
 
   useEffect(() => {
     if (stytch && !user && isInitialized) {
-      if (token && stytch_token_type === OAUTH_TOKEN) {
-        stytch.oauth.authenticate(token, {
-          session_duration_minutes: 60,
-        });
-      } else if (token && stytch_token_type === MAGIC_LINKS_TOKEN) {
-        stytch.magicLinks.authenticate(token, {
+      if (token && stytch_token_type === MAGIC_LINKS_TOKEN) {
+        stytch.magicLinks.authenticate({
+          magic_links_token: token,
           session_duration_minutes: 60,
         });
       } else console.log(`STYTCH_TOKEN_TYPE: ${stytch_token_type}`);
@@ -54,4 +50,4 @@ const Authenticate = () => {
   return null;
 };
 
-export default Authenticate;
+export default AuthenticateComponent;
