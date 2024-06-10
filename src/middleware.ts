@@ -13,6 +13,10 @@ const redirectToPath = (req: NextRequest, pathname: string): NextResponse => {
 export const middleware = (request: NextRequest) => {
   const token: string = request.cookies.get(Constants.STYTCH_JWT_COOKIE_NAME)
     ?.value!;
+
+  if (!token && request.nextUrl.pathname.startsWith("/admin"))
+    return NextResponse.redirect("/admin");
+
   const decoded: JwtPayload = jwt.decode(token) as JwtPayload;
   if (!decoded) return redirectToPath(request, "/admin");
 
