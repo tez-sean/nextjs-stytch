@@ -41,7 +41,7 @@ const AdminHome = () => {
     },
     buttons: {
       primary: {
-        backgroundColor: "rgb(63, 89, 228)",
+        backgroundColor: "#6379df",
         borderColor: "rgb(255, 255, 255)",
         borderRadius: "0.375rem",
         textColor: "#fff",
@@ -52,6 +52,9 @@ const AdminHome = () => {
     },
     container: {
       borderColor: "rgb(255,255,255)",
+    },
+    logo: {
+      logoImageUrl: "/chunky-monkey-logo.png",
     },
   };
 

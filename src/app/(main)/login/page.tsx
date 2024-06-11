@@ -2,12 +2,7 @@
 
 import * as utils from "@/lib/utils";
 import { StytchLogin } from "@stytch/nextjs";
-import {
-  Products,
-  StyleConfig,
-  StytchEventType,
-  StytchLoginConfig,
-} from "@stytch/vanilla-js";
+import { Products, StyleConfig, StytchLoginConfig } from "@stytch/vanilla-js";
 import { useRouter } from "next/navigation";
 
 /*
@@ -76,16 +71,16 @@ const Login = () => {
         <StytchLogin
           config={config}
           styles={styles}
-          callbacks={{
-            onEvent: async ({ type, data }) => {
-              console.log(`EVENTING: ${type}`);
-              if (
-                type === StytchEventType.PasswordAuthenticate ||
-                type === StytchEventType.OTPsAuthenticate
-              )
-                router.push("/location");
-            },
-          }}
+          // callbacks={{
+          //   onEvent: async ({ type, data }) => {
+          //     console.log(`EVENTING: ${type}`);
+          //     if (
+          //       type === StytchEventType.PasswordAuthenticate ||
+          //       type === StytchEventType.OTPsAuthenticate
+          //     )
+          //       router.push("/location");
+          //   },
+          // }}
         />
       </div>
     </div>
