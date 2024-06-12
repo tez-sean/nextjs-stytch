@@ -15,7 +15,7 @@ const MAGIC_LINKS_TOKEN = "multi_tenant_magic_links";
  *
  * On successful authentication, a session will be created and the user will be redirect to /profile.
  */
-const AuthenticateComponent = () => {
+const AdminCallbackComponent = () => {
   const { member: user, isInitialized } = useStytchMember();
   const searchParams = useSearchParams();
   const stytch = useStytchB2BClient();
@@ -50,4 +50,4 @@ const AuthenticateComponent = () => {
   return null;
 };
 
-export default AuthenticateComponent;
+export default AdminCallbackComponent;

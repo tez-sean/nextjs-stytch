@@ -1,3 +1,5 @@
-export const STYTCH_JWT_COOKIE_NAME = "t2p_session_jwt";
-export const STYTCH_TOKEN_COOKIE_NAME = "t2p_session_token";
-export const STYTCH_CLAIMS_ROLES = "https://stytch.com/session";
+export const STYTCH_B2B_JWT_COOKIE = "t2p_b2b_jwt";
+export const STYTCH_B2B_SESSION_COOKIE = "t2p_b2b_session";
+export const STYTCH_B2B_CLAIMS = { ROLES: "https://stytch.com/session" };
+export const STYTCH_B2C_JWT_COOKIE = "t2p_b2c_jwt";
+export const STYTCH_B2C_SESSION_COOKIE = "t2p_b2c_session";

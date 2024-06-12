@@ -4,6 +4,7 @@ import { StytchB2B } from "@stytch/nextjs/b2b";
 import {
   AuthFlowType,
   B2BProducts,
+  StyleConfig,
   StytchB2BUIConfig,
   StytchEventType,
 } from "@stytch/vanilla-js";
@@ -16,6 +17,30 @@ const config: StytchB2BUIConfig = {
     sessionDurationMinutes: 60,
   },
 };
+const styles: StyleConfig = {
+  inputs: {
+    borderRadius: "0.375rem",
+    borderColor: "#dedede",
+    textColor: "#333333",
+  },
+  buttons: {
+    primary: {
+      backgroundColor: "#6379df",
+      borderColor: "rgb(255, 255, 255)",
+      borderRadius: "0.375rem",
+      textColor: "#fff",
+    },
+  },
+  colors: {
+    primary: "rgb(25, 25, 25)",
+  },
+  container: {
+    borderColor: "rgb(255,255,255)",
+  },
+  logo: {
+    logoImageUrl: "/chunky-monkey-logo.png",
+  },
+};
 
 const ResetPassword = () => {
   const router = useRouter();
@@ -25,6 +50,7 @@ const ResetPassword = () => {
       <div>
         <StytchB2B
           config={config}
+          styles={styles}
           callbacks={{
             onEvent: async ({ type, data }) => {
               if (type === StytchEventType.B2BPasswordResetByEmail)

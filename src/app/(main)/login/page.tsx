@@ -13,34 +13,24 @@ import { useRouter } from "next/navigation";
  */
 const Login = () => {
   const router = useRouter();
+  const redirectUrl = `${utils.getDomainFromWindow()}/login/callback`;
 
   const config = {
-    products: [
-      Products.emailMagicLinks,
-      Products.oauth,
-      Products.otp,
-      Products.passwords,
-    ],
+    products: [Products.emailMagicLinks, Products.oauth, Products.otp],
     emailMagicLinksOptions: {
-      loginRedirectURL: utils.getDomainFromWindow() + "/authenticate",
+      loginRedirectURL: redirectUrl,
       loginExpirationMinutes: 60,
-      signupRedirectURL: utils.getDomainFromWindow() + "/authenticate",
+      signupRedirectURL: redirectUrl,
       signupExpirationMinutes: 60,
     },
     oauthOptions: {
       providers: [{ type: "google" }, { type: "apple" }],
-      loginRedirectURL: utils.getDomainFromWindow() + "/authenticate",
-      signupRedirectURL: utils.getDomainFromWindow() + "/authenticate",
+      loginRedirectURL: redirectUrl,
+      signupRedirectURL: redirectUrl,
     },
     otpOptions: {
       methods: ["sms"],
       expirationMinutes: 10,
-    },
-    passwordOptions: {
-      loginRedirectURL: utils.getDomainFromWindow() + "/authenticate",
-      loginExpirationMinutes: 60,
-      resetPasswordRedirectURL: utils.getDomainFromWindow() + "/authenticate",
-      resetPasswordExpirationMinutes: 60,
     },
   } as StytchLoginConfig;
   const styles: StyleConfig = {

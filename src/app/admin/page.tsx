@@ -15,7 +15,7 @@ import Link from "next/link";
 
 const AdminHome = () => {
   const router = useRouter();
-  const redirectUrl = `${utils.getDomainFromWindow()}/admin/authenticate`;
+  const redirectUrl = `${utils.getDomainFromWindow()}/admin/auth/callback`;
 
   const config: StytchB2BUIConfig = {
     authFlowType: AuthFlowType.Organization,
@@ -59,7 +59,7 @@ const AdminHome = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center bg-gray-100">
+    <div className="h-screen flex flex-col justify-center items-center">
       <div className="rou">Admin Home</div>
 
       <Link href="/admin/profile">Profile</Link>
@@ -70,6 +70,7 @@ const AdminHome = () => {
           styles={styles}
           callbacks={{
             onEvent: async ({ type, data }) => {
+              console.log(`was I called? (${type})`);
               if (
                 type === StytchEventType.B2BMagicLinkAuthenticate ||
                 type === StytchEventType.B2BPasswordAuthenticate

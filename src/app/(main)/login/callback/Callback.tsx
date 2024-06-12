@@ -16,7 +16,7 @@ const MAGIC_LINKS_TOKEN = "magic_links";
  *
  * On successful authentication, a session will be created and the user will be redirect to /profile.
  */
-const Authenticate = () => {
+const Callback = () => {
   const { user, isInitialized } = useStytchUser();
   const searchParams = useSearchParams();
   const stytch = useStytch();
@@ -47,11 +47,11 @@ const Authenticate = () => {
     }
 
     if (user) {
-      router.replace("/location");
+      router.replace("/profile");
     }
   }, [router, user, isInitialized]);
 
   return null;
 };
 
-export default Authenticate;
+export default Callback;

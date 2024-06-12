@@ -1,5 +1,4 @@
 import * as Constants from "@/constants";
-import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 
 // Server side redirects require the FULL path (protocol+domain)
@@ -11,14 +10,27 @@ const redirectToPath = (req: NextRequest, pathname: string): NextResponse => {
 };
 
 export const middleware = (request: NextRequest) => {
-  const token: string = request.cookies.get(Constants.STYTCH_JWT_COOKIE_NAME)
-    ?.value!;
-  if (!token && request.nextUrl.pathname.startsWith("/admin"))
-    return redirectToPath(request, "/admin");
+  // If no auth cookie, send to login page (based on path requested)
+  if (
+    !request.cookies.has(Constants.STYTCH_B2B_JWT_COOKIE) &&
+    !request.cookies.has(Constants.STYTCH_B2C_JWT_COOKIE)
+  )
+    return request.nextUrl.pathname.startsWith("/admin")
+      ? redirectToPath(request, "/admin")
+      : redirectToPath(request, "/login");
 
-  const decoded: JwtPayload = jwt.decode(token) as JwtPayload;
-  if (!decoded && request.nextUrl.pathname.startsWith("/admin"))
-    return redirectToPath(request, "/admin");
+  // If b2b/internal user
+  if (request.cookies.has(Constants.STYTCH_B2B_JWT_COOKIE)) {
+    const token = request.cookies.get(Constants.STYTCH_B2B_JWT_COOKIE)?.value;
+
+    // TODO: Validate token!!
+    if (!token) return redirectToPath(request, "/admin");
+  } else {
+    const token = request.cookies.get(Constants.STYTCH_B2C_JWT_COOKIE)?.value;
+
+    // TODO: Validate token!!
+    if (!token) return redirectToPath(request, "/login");
+  }
 
   // const roles: string[] =
   //   decoded[Constants.STYTCH_CLAIMS_ROLES]?.roles?.map((role: string) =>
@@ -28,5 +40,5 @@ export const middleware = (request: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/admin/dashboard"],
+  matcher: ["/admin/dashboard", "/profile"],
 };
