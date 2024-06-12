@@ -24,7 +24,7 @@ const AdminCallbackComponent = () => {
   const token = searchParams.get("token");
   const stytch_token_type = searchParams.get("stytch_token_type");
 
-  console.log(`${token}::${stytch_token_type}`);
+  // console.log(`${token}::${stytch_token_type}`);
 
   useEffect(() => {
     if (stytch && !user && isInitialized) {

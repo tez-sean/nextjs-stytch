@@ -7,3 +7,9 @@ export const getDomainFromWindow = () => {
 
   return null;
 };
+
+export const getSubdomainFromWindow = () => {
+  if (typeof window !== "undefined") return window.location.host.split(".")[0];
+
+  return null;
+};

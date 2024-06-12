@@ -11,11 +11,12 @@ import {
 import { useRouter } from "next/navigation";
 
 import * as utils from "@/lib/utils";
-import Link from "next/link";
 
 const AdminHome = () => {
   const router = useRouter();
   const redirectUrl = `${utils.getDomainFromWindow()}/admin/auth/callback`;
+  // Hack to show logo (setting in Org doesn't seem to do anything)
+  const org = utils.getSubdomainFromWindow() ?? "chunky-monkey";
 
   const config: StytchB2BUIConfig = {
     authFlowType: AuthFlowType.Organization,
@@ -54,15 +55,13 @@ const AdminHome = () => {
       borderColor: "rgb(255,255,255)",
     },
     logo: {
-      logoImageUrl: "/chunky-monkey-logo.png",
+      logoImageUrl: `/logos/${org}.png`,
     },
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
-      <div className="rou">Admin Home</div>
-
-      <Link href="/admin/profile">Profile</Link>
+    <div className="h-screen flex flex-col justify-center items-center text-black">
+      <div className=" mb-5">Admin Home</div>
 
       <div className="shadow-lg">
         <StytchB2B

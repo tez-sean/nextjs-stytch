@@ -25,7 +25,7 @@ const Callback = () => {
   const token = searchParams.get("token");
   const stytch_token_type = searchParams.get("stytch_token_type");
 
-  console.log(`${token}::${stytch_token_type}`);
+  // console.log(`${token}::${stytch_token_type}`);
 
   useEffect(() => {
     if (stytch && !user && isInitialized) {
@@ -34,9 +34,13 @@ const Callback = () => {
           session_duration_minutes: 60,
         });
       } else if (token && stytch_token_type === MAGIC_LINKS_TOKEN) {
-        stytch.magicLinks.authenticate(token, {
-          session_duration_minutes: 60,
-        });
+        stytch.magicLinks
+          .authenticate(token, {
+            session_duration_minutes: 60,
+          })
+          .catch((err) => {
+            router.replace("/login/error");
+          });
       } else console.log(`STYTCH_TOKEN_TYPE: ${stytch_token_type}`);
     }
   }, [isInitialized, router, stytch, user, token, stytch_token_type]);
@@ -47,7 +51,7 @@ const Callback = () => {
     }
 
     if (user) {
-      router.replace("/profile");
+      router.replace("/location");
     }
   }, [router, user, isInitialized]);
 
